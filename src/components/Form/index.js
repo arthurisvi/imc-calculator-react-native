@@ -1,6 +1,8 @@
 import React, { useState } from "react";
-import { View, Text, TextInput, Button } from "react-native";
-import Result from "../Result";
+import { View, Text, TextInput, TouchableOpacity } from "react-native";
+import Modal from "../Modal";
+
+import styles from "./style";
 
 export default function Form() {
   const [height, setHeight] = useState(null);
@@ -8,6 +10,15 @@ export default function Form() {
   const [message, setMessage] = useState("Preencha o peso e altura");
   const [imc, setImc] = useState(null);
   const [textButton, setTextButton] = useState("Calcular");
+  const [modalState, setModalState] = useState(false);
+
+  const passStateModal = (state) => {
+    if (state === false) {
+      setHeight("");
+      setWeight("");
+    }
+    setModalState(state);
+  };
 
   function imcCalculator() {
     return setImc((weight / (height * height)).toFixed(2));
@@ -16,41 +27,50 @@ export default function Form() {
   function validationImc() {
     if (height !== null && weight !== null) {
       imcCalculator();
-      setHeight(null);
-      setWeight(null);
       setMessage("Seu IMC é igual: ");
       setTextButton("Calcular novamente");
+      setModalState(true);
+      setHeight(null);
+      setWeight(null);
       return;
     }
 
     setImc(null);
     setTextButton("Calcular");
-    setMessage("Preencha o peso e altura");
+    setMessage("Os campos peso e/ou altura não podem estar vazios!!");
+    setModalState(true);
   }
 
   return (
-    <View>
-      <View>
-        <Text>Altura</Text>
+    <View style={styles.boxForm}>
+      <View style={styles.form}>
+        {/* <Text>Altura</Text> */}
         <TextInput
+          style={styles.input}
           onChangeText={setHeight}
           value={height}
-          placeholder="1.65"
+          placeholder="Altura (ex: 1.65)"
           keyboardType="numeric"
         />
 
-        <Text>Peso</Text>
         <TextInput
+          style={styles.input}
           onChangeText={setWeight}
           value={weight}
-          placeholder="65.5"
+          placeholder="Peso (ex: 65.5)"
           keyboardType="numeric"
         />
 
-        <Button onPress={() => validationImc()} title={textButton}></Button>
+        <TouchableOpacity style={styles.button} onPress={() => validationImc()}>
+          <Text style={styles.textButton}>{textButton}</Text>
+        </TouchableOpacity>
       </View>
-
-      <Result message={message} result={imc} />
+      <Modal
+        modalState={modalState}
+        passStateModal={passStateModal}
+        message={message}
+        result={imc}
+      />
     </View>
   );
 }
