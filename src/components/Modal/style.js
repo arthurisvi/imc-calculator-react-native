@@ -7,19 +7,19 @@ const styles = StyleSheet.create({
         padding: 20,
         borderRadius: 12,
         elevation: 10,
-        height: 200,
     },
     text: {
         color: "#fff",
         fontSize: 20,
     },
     button: {
-        marginTop: 30,
+        marginTop: 20,
         borderRadius: 12,
         backgroundColor: "#6BBB85",
         alignItems: "center",
         justifyContent: "center",
         padding: 10,
+        float: "left",
     },
 });
 

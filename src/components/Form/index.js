@@ -13,10 +13,6 @@ export default function Form() {
   const [modalState, setModalState] = useState(false);
 
   const passStateModal = (state) => {
-    if (state === false) {
-      setHeight("");
-      setWeight("");
-    }
     setModalState(state);
   };
 
@@ -26,12 +22,12 @@ export default function Form() {
 
   function validationImc() {
     if (height !== null && weight !== null) {
+      setHeight(null);
+      setWeight(null);
       imcCalculator();
       setMessage("Seu IMC é igual: ");
       setTextButton("Calcular novamente");
       setModalState(true);
-      setHeight(null);
-      setWeight(null);
       return;
     }
 
