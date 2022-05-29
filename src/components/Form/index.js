@@ -18,6 +18,7 @@ export default function Form() {
   const [imc, setImc] = useState(null);
   const [textButton, setTextButton] = useState("Calcular");
   const [modalState, setModalState] = useState(false);
+  const [historic, setHistoric] = useState(false);
 
   const passStateModal = (state) => {
     setModalState(state);
@@ -28,19 +29,24 @@ export default function Form() {
   }
 
   function validationImc() {
+    setHistoric(false);
     if (height !== null && weight !== null) {
+      imcCalculator();
       setHeight(null);
       setWeight(null);
-      imcCalculator();
       setMessage("Seu IMC é igual: ");
       setTextButton("Calcular novamente");
       setModalState(true);
-      return;
+    } else {
+      setImc(null);
+      setTextButton("Calcular");
+      setMessage("Os campos peso e/ou altura não podem estar vazios!!");
+      setModalState(true);
     }
+  }
 
-    setImc(null);
-    setTextButton("Calcular");
-    setMessage("Os campos peso e/ou altura não podem estar vazios!!");
+  function openModalContentHistoric() {
+    setHistoric(true);
     setModalState(true);
   }
 
@@ -70,13 +76,24 @@ export default function Form() {
           >
             <Text style={styles.textButton}>{textButton}</Text>
           </TouchableOpacity>
+
+          <TouchableOpacity
+            style={styles.button}
+            onPress={() => openModalContentHistoric()}
+          >
+            <Text style={styles.textButton}>Ver histórico</Text>
+          </TouchableOpacity>
         </View>
-        <Modal
-          modalState={modalState}
-          passStateModal={passStateModal}
-          message={message}
-          result={imc}
-        />
+        {modalState ? (
+          <Modal
+            passStateModal={passStateModal}
+            historic={historic}
+            message={message}
+            result={imc}
+          />
+        ) : (
+          <View></View>
+        )}
       </View>
     </Pressable>
   );
