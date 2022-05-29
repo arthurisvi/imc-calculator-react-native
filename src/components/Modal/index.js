@@ -11,30 +11,37 @@ export default function (props) {
   return (
     <View>
       <Modal animationType="fade" transparent={true} visible={props.modalState}>
-        <View style={styles.modalContainer}>
-          <Text style={styles.text}>{props.message}</Text>
-          <Text style={styles.text}>{props.result}</Text>
-          <TouchableOpacity
-            style={styles.button}
-            onPress={() => {
-              props.passStateModal(false);
-            }}
-          >
-            <Text style={styles.text}>OK</Text>
-          </TouchableOpacity>
-          {props.result !== null ? (
+        <TouchableOpacity
+          style={styles.modalContainer}
+          onPress={() => {
+            props.passStateModal(false);
+          }}
+        >
+          <View style={styles.modal}>
+            <Text style={styles.text}>{props.message}</Text>
+            <Text style={styles.text}>{props.result}</Text>
             <TouchableOpacity
               style={styles.button}
               onPress={() => {
-                onShare();
+                props.passStateModal(false);
               }}
             >
-              <Text style={styles.text}>Compartilhar</Text>
+              <Text style={styles.text}>OK</Text>
             </TouchableOpacity>
-          ) : (
-            <View></View>
-          )}
-        </View>
+            {props.result !== null ? (
+              <TouchableOpacity
+                style={styles.button}
+                onPress={() => {
+                  onShare();
+                }}
+              >
+                <Text style={styles.text}>Compartilhar</Text>
+              </TouchableOpacity>
+            ) : (
+              <View></View>
+            )}
+          </View>
+        </TouchableOpacity>
       </Modal>
     </View>
   );

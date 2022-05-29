@@ -1,5 +1,12 @@
 import React, { useState } from "react";
-import { View, Text, TextInput, TouchableOpacity } from "react-native";
+import {
+  View,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  Pressable,
+  Keyboard,
+} from "react-native";
 import Modal from "../Modal";
 
 import styles from "./style";
@@ -38,35 +45,39 @@ export default function Form() {
   }
 
   return (
-    <View style={styles.boxForm}>
-      <View style={styles.form}>
-        {/* <Text>Altura</Text> */}
-        <TextInput
-          style={styles.input}
-          onChangeText={setHeight}
-          value={height}
-          placeholder="Altura (ex: 1.65)"
-          keyboardType="numeric"
-        />
+    <Pressable onPress={Keyboard.dismiss}>
+      <View style={styles.boxForm}>
+        <View style={styles.form}>
+          <TextInput
+            style={styles.input}
+            onChangeText={setHeight}
+            value={height}
+            placeholder="Altura (ex: 1.65)"
+            keyboardType="numeric"
+          />
 
-        <TextInput
-          style={styles.input}
-          onChangeText={setWeight}
-          value={weight}
-          placeholder="Peso (ex: 65.5)"
-          keyboardType="numeric"
-        />
+          <TextInput
+            style={styles.input}
+            onChangeText={setWeight}
+            value={weight}
+            placeholder="Peso (ex: 65.5)"
+            keyboardType="numeric"
+          />
 
-        <TouchableOpacity style={styles.button} onPress={() => validationImc()}>
-          <Text style={styles.textButton}>{textButton}</Text>
-        </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.button}
+            onPress={() => validationImc()}
+          >
+            <Text style={styles.textButton}>{textButton}</Text>
+          </TouchableOpacity>
+        </View>
+        <Modal
+          modalState={modalState}
+          passStateModal={passStateModal}
+          message={message}
+          result={imc}
+        />
       </View>
-      <Modal
-        modalState={modalState}
-        passStateModal={passStateModal}
-        message={message}
-        result={imc}
-      />
-    </View>
+    </Pressable>
   );
 }

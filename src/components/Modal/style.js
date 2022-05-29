@@ -2,6 +2,9 @@ import { StyleSheet } from "react-native";
 
 const styles = StyleSheet.create({
     modalContainer: {
+        flex: 1,
+    },
+    modal: {
         backgroundColor: "#C7662B",
         margin: 20,
         padding: 20,
