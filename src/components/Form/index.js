@@ -19,13 +19,19 @@ export default function Form() {
   const [textButton, setTextButton] = useState("Calcular");
   const [modalState, setModalState] = useState(false);
   const [historic, setHistoric] = useState(false);
+  const [imcList, setImcList] = useState([]);
 
   const passStateModal = (state) => {
     setModalState(state);
   };
 
   function imcCalculator() {
-    return setImc((weight / (height * height)).toFixed(2));
+    let totalImc = (weight / (height * height)).toFixed(2);
+    setImcList((arr) => [
+      ...arr,
+      { id: imcList.length + 1, date: new Date(), imc: totalImc },
+    ]);
+    setImc(totalImc);
   }
 
   function validationImc() {
@@ -34,7 +40,7 @@ export default function Form() {
       imcCalculator();
       setHeight(null);
       setWeight(null);
-      setMessage("Seu IMC é igual: ");
+      setMessage("Seu IMC é igual a: ");
       setTextButton("Calcular novamente");
       setModalState(true);
     } else {
@@ -88,6 +94,7 @@ export default function Form() {
           <Modal
             passStateModal={passStateModal}
             historic={historic}
+            imcList={imcList}
             message={message}
             result={imc}
           />

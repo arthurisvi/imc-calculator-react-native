@@ -11,9 +11,19 @@ const styles = StyleSheet.create({
         borderRadius: 12,
         elevation: 10,
     },
+    modalContent: {
+        alignItems: "center",
+        justifyContent: "center",
+    },
     text: {
         color: "#fff",
         fontSize: 20,
+    },
+    textResult: {
+        margin: 20,
+        color: "#6BBB85",
+        fontSize: 56,
+        fontWeight: "bold",
     },
     button: {
         marginTop: 20,
